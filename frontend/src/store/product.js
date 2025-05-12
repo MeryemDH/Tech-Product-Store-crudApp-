@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-
 export const useProductStore = create((set) => ({
 	products: [],
 	setProducts: (products) => set({ products }),
@@ -8,7 +7,7 @@ export const useProductStore = create((set) => ({
 		if (!newProduct.name || !newProduct.image || !newProduct.price) {
 			return { success: false, message: "Please fill in all fields." };
 		}
-		const res = await fetch("http://localhost:5000/api/products", {
+		const res = await fetch("/api/products", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -27,12 +26,12 @@ export const useProductStore = create((set) => ({
 		return { success: true, message: "Product created successfully" };
 	},
 	fetchProducts: async () => {
-		const res = await fetch("http://localhost:5000/api/products");
+		const res = await fetch("/api/products");
 		const data = await res.json();
 		set({ products: data.data });
 	},
 	deleteProduct: async (pid) => {
-		const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
+		const res = await fetch(`/api/products/${pid}`, {
 			method: "DELETE",
 		});
 		const data = await res.json();
@@ -43,7 +42,7 @@ export const useProductStore = create((set) => ({
 		return { success: true, message: data.message };
 	},
 	updateProduct: async (pid, updatedProduct) => {
-		const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
+		const res = await fetch(`/api/products/${pid}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
